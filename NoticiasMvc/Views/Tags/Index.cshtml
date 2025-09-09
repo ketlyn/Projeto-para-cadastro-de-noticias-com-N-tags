@@ -1,0 +1,42 @@
+﻿@model IEnumerable<NoticiasMvc.Models.Tag>
+@{
+    ViewData["Title"] = "Tags";
+    var err = TempData["Error"] as string;
+    var ok = TempData["Success"] as string;
+}
+<h2>Tags</h2>
+
+@if (!string.IsNullOrWhiteSpace(err))
+{
+     <div class="alert alert-danger">@err</div>
+}
+@if (!string.IsNullOrWhiteSpace(ok))
+{
+     <div class="alert alert-success">@ok</div>
+}
+
+<p>
+    <a class="btn btn-primary" asp-controller="Tags" asp-action="Create">Nova Tag</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th style="width:240px;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.Descricao</td>
+                <td>
+                    <a class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@t.Id">Detalhes</a>
+                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@t.Id">Editar</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@t.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,23 @@
+﻿@model NoticiasMvc.Models.Tag
+@{
+    ViewData["Title"] = "Editar Tag";
+}
+<h2>Editar Tag</h2>
+<hr />
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Descricao" class="form-label"></label>
+        <input asp-for="Descricao" class="form-control" />
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

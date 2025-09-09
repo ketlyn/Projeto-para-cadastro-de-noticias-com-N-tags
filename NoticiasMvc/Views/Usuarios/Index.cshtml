@@ -1,0 +1,44 @@
+﻿@model IEnumerable<NoticiasMvc.Models.Usuario>
+@{
+    ViewData["Title"] = "Usuários";
+    var err = TempData["Error"] as string;
+    var ok = TempData["Success"] as string;
+}
+<h2>Usuários</h2>
+
+@if (!string.IsNullOrWhiteSpace(err))
+{
+     <div class="alert alert-danger">@err</div>
+}
+@if (!string.IsNullOrWhiteSpace(ok))
+{
+     <div class="alert alert-success">@ok</div>
+}
+
+<p>
+    <a class="btn btn-primary" asp-controller="Usuarios" asp-action="Create">Novo Usuário</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th style="width:240px;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.Nome</td>
+                <td>@u.Email</td>
+                <td>
+                    <a class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@u.Id">Detalhes</a>
+                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@u.Id">Editar</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@u.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,58 @@
+@model IEnumerable<NoticiasMvc.Models.Noticia>
+
+@{
+    ViewData["Title"] = "Notícias";
+}
+
+<h2>Notícias</h2>
+
+<div class="mb-3">
+    <button id="btnNova" class="btn btn-primary" data-url='@Url.Action("Create", "Noticias")'>
+        Nova Notícia
+    </button>
+</div>
+
+<div id="ajax-area"><!-- partial do formulário será carregada aqui --></div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Usuário</th>
+            <th>Tags</th>
+            <th style="width:220px;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var n in Model)
+
+        {
+            <tr>
+                <td>@n.Titulo</td>
+                <td>@n.Usuario?.Nome</td>
+                <td>
+                    @string.Join(", ", (n.NoticiasTags ?? new List<NoticiasMvc.Models.NoticiaTag>())
+                             .Where(x => x.Tag != null)
+                             .Select(x => x.Tag!.Descricao))
+                </td>
+                <td>
+                    <a class="btn btn-secondary btn-sm"
+                       asp-controller="Noticias" asp-action="Details" asp-route-id="@n.Id">Detalhes</a>
+
+                    <button class="btn btn-warning btn-sm js-edit"
+                            data-url='@Url.Action("Edit", "Noticias", new { id = n.Id })'>
+                        Editar 
+                    </button>
+
+                    <a class="btn btn-danger btn-sm"
+                       asp-controller="Noticias" asp-action="Delete" asp-route-id="@n.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/noticias.js" asp-append-version="true"></script>
+}
